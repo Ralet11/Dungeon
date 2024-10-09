@@ -14,6 +14,8 @@ app.get("/", (req,res)=>{
 })
 app.use("/api/user", userRouter)
 app.use("/api/personaje", personajeRouter)
+app.use("/api/clases", personajeRouter)
+
 const PORT = 3000
 app.listen(PORT,()=>{
     console.log(`Servidor corriendo en http://localhost:${PORT}`);

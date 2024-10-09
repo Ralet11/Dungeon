@@ -1,6 +1,9 @@
 const usuarios = [{
     nombre: "Pablo",
-    contraseña: 123456
+    contraseña: 123456,
+    id: 1,
+    direccion,
+    telefono,
 }];
 
 export const userlogin = (req, res) => {
@@ -29,4 +32,25 @@ export const userRegister = (req, res) =>{
             usuarios: usuarios
         });
     }
+}
+
+export const updateUser = (req, res) => {
+
+    const { id } = req.params;
+    const {nombre, contraseña, } = req.body;
+
+ // encontrar el usuario cuyo id coincida con el id de la URL
+   try {
+    const usuario = usuarios.find(user => user.id == id);
+    usuario.nombre = nombre
+    usuario.contraseña = contraseña
+    console.log(usuario, "nuevo usuario")
+    console.log(usuarios, "lista de usuarios")
+    res.send({usuarios, usuario})
+   } catch (error) {
+    console.log("usuario no encontrado")
+    res.send(error)
+   }
+
+   
 }
