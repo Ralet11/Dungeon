@@ -2,8 +2,6 @@ const usuarios = [{
     nombre: "Pablo",
     contraseña: 123456,
     id: 1,
-    direccion,
-    telefono,
 }];
 
 export const userlogin = (req, res) => {

@@ -53,3 +53,21 @@ export const getbyuser =(req, res)=>{
     res.status(401).send("No tenes PJ creado");
   }
 }
+
+export const modificar = (req, res) =>{
+  const id = parseInt(req.params.id)
+  const pjModificado = req.body
+  const personaje = personajes.find(p => p.id === id);
+  if (personaje){
+    Object.assign(personaje, pjModificado)
+    res.status(200).json({
+      mensaje: "Personaje modificado con éxito",
+      pjModificado: personaje
+    });
+  } else {
+    res.status(404).json({
+      mensaje: "Personaje no encontrado"
+    })
+  }
+
+}

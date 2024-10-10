@@ -16,8 +16,11 @@ const dndClasses = [
     { id: 15, name: "Sombra" }
 ]
 
+export const getClases = (req , res)=>{
+    res.send(dndClasses)
+    }
 
 
 // copiar de user.controlador.js
 
-// armar el controlador get para traer todas las lases
+// armar el controlador get para traer todas las clase

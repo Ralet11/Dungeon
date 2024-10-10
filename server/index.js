@@ -2,6 +2,8 @@ import express from "express"
 import userRouter from "./rutas/user.rutas.js"
 import personajeRouter from "./rutas/personajes.rutas.js"
 import morgan from "morgan";
+import clasesRouter from "./rutas/clases.rutas.js"
+
 
 
 
@@ -14,7 +16,8 @@ app.get("/", (req,res)=>{
 })
 app.use("/api/user", userRouter)
 app.use("/api/personaje", personajeRouter)
-app.use("/api/clases", personajeRouter)
+app.use("/api/clases", clasesRouter)
+
 
 const PORT = 3000
 app.listen(PORT,()=>{
