@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import axios from 'axios';
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,18 +10,24 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  console.log(email, "email")
+  console.log(password, "pass")
+
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   };
 
-  const handleSubmit = (e) => {
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!validateEmail(email)) {
       toast.error('Por favor, ingresa un email válido.');
       return;
     }
+
 
     if (password.trim() === '') {
       toast.error('La contraseña no puede estar vacía.');
@@ -30,7 +37,7 @@ const Login = () => {
     setIsLoading(true);
 
     // Simular proceso de login
-    setTimeout(() => {
+   /*  setTimeout(() => {
       setIsLoading(false);
       if (email === 'test@example.com' && password === 'password123') {
         toast.success('Inicio de sesión exitoso!');
@@ -38,7 +45,28 @@ const Login = () => {
       } else {
         toast.error('Credenciales incorrectas, por favor intenta nuevamente.');
       }
-    }, 2000);
+    }, 2000); */
+
+    const dataLogin = {
+      email: email,
+      contraseña: password
+    }
+
+    console.log(dataLogin, "esto estamos enviando al back")
+
+    try {
+    const response = await axios.post(`http://localhost:3000/api/user/login`, dataLogin)
+    console.log(response.data)
+    toast.success(response.data.mensaje)
+    navigate('/')
+
+    } catch (error) {
+      console.log(error.response.data)
+      toast.error(error.response.data)
+      setIsLoading(false)
+    }
+
+
   };
 
   return (
@@ -129,3 +157,5 @@ const Login = () => {
 };
 
 export default Login;
+
+

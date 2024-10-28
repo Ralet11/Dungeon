@@ -4,6 +4,8 @@ import Main from './screens/HomeScreen';
 import Login from './screens/Login';
 import Signup from './screens/SingUp';
 import HomeScreen from './screens/HomeScreen';
+import Map1 from './screens/Map1';
+import MapMain from './screens/MapMain';
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
           <Route path="/" element={<HomeScreen />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/mapMain" element={<MapMain />} />
         </Routes>
     </Router>
   );

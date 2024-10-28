@@ -1,17 +1,25 @@
 const usuarios = [{
-    nombre: "Pablo",
-    contraseña: 123456,
+    email: "ramiro.alet@hotmail.com",
+    contraseña: "123456",
     id: 1,
+    name: "ramiro alet",
+    phone: "154658585",
+    direccion: "direccion 1"
 }];
 
+
+
 export const userlogin = (req, res) => {
-    const { nombre, contraseña } = req.body;
-    console.log(req.body)
-    // Buscar el usuario que coincida con el nombre y la contraseña
-    const usuarioValido = usuarios.find(user => user.nombre === nombre && user.contraseña === contraseña);
+    const { email, contraseña } = req.body;
+console.log(email, contraseña, "datos del usuario")
+    // Buscar el usuario que coincida con el email y la contraseña
+    const usuarioValido = usuarios.find(user => user.email === email && user.contraseña === contraseña);
 
     if (usuarioValido) {
-        res.send("Usuario conectado");
+        res.send({
+            usuario: usuarioValido,
+            mensaje: "Inicio de sesión exitoso"
+        });
     } else {
         res.status(401).send("Credenciales incorrectas");
     }
