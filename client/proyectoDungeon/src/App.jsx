@@ -6,6 +6,9 @@ import Signup from './screens/SingUp';
 import HomeScreen from './screens/HomeScreen';
 import Map1 from './screens/Map1';
 import MapMain from './screens/MapMain';
+import CharacterCreator from './screens/CharacterCreation';
+import CharacterProfile from './screens/CharacterProfile';
+import FreeWorld from './screens/Freeworld';
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/mapMain" element={<MapMain />} />
+          <Route path="/CharacterCreation" element={<CharacterCreator />} />
+          <Route path="/characterProfile" element={<CharacterProfile />} />
+          <Route path="/freeWorld" element={<FreeWorld />} />
         </Routes>
     </Router>
   );

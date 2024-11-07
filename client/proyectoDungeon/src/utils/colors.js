@@ -1,0 +1,15 @@
+export const colors = {
+    backgroundStart: '#1b1f38',
+    backgroundEnd: '#252940',
+    cardBackground: '#252940',
+    cardHoverBackground: '#1f233b',
+    cardAccent: '#9a8df2',
+    buttonBackground: '#9a8df2',
+    buttonText: '#ffffff',
+    buttonHoverBackground: '#1f233b',
+    textPrimary: '#ffffff',
+    textSecondary: '#9a8df2',
+    iconColor: '#9a8df2',
+    purpleLight: '#9a8df2',
+    purpleDark: '#252940',
+  };

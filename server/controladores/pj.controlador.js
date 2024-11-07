@@ -11,7 +11,7 @@ const personajes = [{
   }]
 
   export const crearPj = (req, res) =>{
-    const {id, nombre, raza, clase, nivel, puntosDeVida, alineamiento, ca, user_name}= req.body //extraer la info del body
+    const {id, nombre, raza, clase, trasfondo, nivel, puntosDeVida, alineamiento, ca, user_id, armor, miedos, hobbies, rasgos, equipo}= req.body //extraer la info del body
     //guardar la info en personajes
     const nuevo_personaje = {
       id,
