@@ -4,6 +4,7 @@ import personajeRouter from "./rutas/personajes.rutas.js"
 import morgan from "morgan";
 import clasesRouter from "./rutas/clases.rutas.js"
 import cors from "cors"
+import sequelize from "./sequelize.js";
 
 
 
@@ -31,7 +32,11 @@ app.use("/api/clases", clasesRouter)
 
 
 const PORT = 3000
-app.listen(PORT,()=>{
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
-})
+sequelize.sync({force:false}).then(()=>{
+    app.listen(PORT,()=>{
+        console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    })
+}).catch(error => {
+    console.error('Unable to synchronize the models:', error);
+  });
 

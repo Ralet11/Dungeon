@@ -71,3 +71,19 @@ export const modificar = (req, res) =>{
   }
 
 }
+
+export const eliminar = (req, res) => {
+  const id = parseInt(req.params.id);  // Captura el id de los parámetros de la URL
+  const index = personajes.findIndex(p => p.id === id);  // Busca el índice del personaje en la lista
+
+  if (index !== -1) {  // Si se encontró el personaje
+    personajes.splice(index, 1);  // Elimina el personaje de la lista
+    res.status(200).json({
+      mensaje: "Personaje eliminado correctamente"
+    });
+  } else {
+    res.status(404).json({
+      mensaje: "Personaje no encontrado"
+    });
+  }
+};

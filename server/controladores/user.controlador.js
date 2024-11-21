@@ -1,62 +1,88 @@
-const usuarios = [{
-    email: "ramiro.alet@hotmail.com",
-    contraseña: "123456",
-    id: 1,
-    name: "ramiro alet",
-    phone: "154658585",
-    direccion: "direccion 1"
-}];
+import User from "../modelos/user.js";
 
-
-
-export const userlogin = (req, res) => {
+// Función para iniciar sesión
+export const userLogin = async (req, res) => {
     const { email, contraseña } = req.body;
-console.log(email, contraseña, "datos del usuario")
-    // Buscar el usuario que coincida con el email y la contraseña
-    const usuarioValido = usuarios.find(user => user.email === email && user.contraseña === contraseña);
+    console.log(email, contraseña, "datos del usuario");
 
-    if (usuarioValido) {
-        res.send({
-            usuario: usuarioValido,
-            mensaje: "Inicio de sesión exitoso"
+    try {
+        // Buscar el usuario que coincida con el email y la contraseña
+        const usuarioValido = await User.findOne({
+            where: {
+                email: email,
+                password: contraseña
+            }
         });
-    } else {
-        res.status(401).send("Credenciales incorrectas");
+
+        if (usuarioValido) {
+            res.send({
+                usuario: usuarioValido,
+                mensaje: "Inicio de sesión exitoso"
+            });
+        } else {
+            res.status(401).send("Credenciales incorrectas");
+        }
+    } catch (error) {
+        console.error("Error al iniciar sesión:", error);
+        res.status(500).send("Error interno del servidor");
     }
-}
+};
 
-export const userRegister = (req, res) =>{
-    const {nombre, contraseña} = req.body;
+// Función para registrar un usuario
+export const userRegister = async (req, res) => {
+    const { name, password, address, email } = req.body;
 
-    const usuarioEncontrado = usuarios.find(user => user.nombre === nombre);
-    if (usuarioEncontrado) {
-        res.status(400).send("Usuario ya existente :( ");
-    } else {
-        usuarios.push({nombre, contraseña})
-        res.send({
-            mensaje: "Usuario Creado",
-            usuarios: usuarios
+    try {
+        // Verificar si el usuario ya existe
+        const usuarioEncontrado = await User.findOne({
+            where: { email: email }
         });
+
+        if (usuarioEncontrado) {
+            res.status(400).send("Usuario ya existente :(");
+        } else {
+            // Crear el nuevo usuario
+            await User.create({ name, password, address, email });
+
+            // Obtener todos los usuarios para confirmar la creación
+            const usuariosTotales = await User.findAll();
+            res.send({
+                mensaje: "Usuario creado",
+                usuarios: usuariosTotales
+            });
+        }
+    } catch (error) {
+        console.error("Error al registrar usuario:", error);
+        res.status(500).send("Error interno del servidor");
     }
-}
+};
 
-export const updateUser = (req, res) => {
-
+// Función para actualizar un usuario
+export const updateUser = async (req, res) => {
     const { id } = req.params;
-    const {nombre, contraseña, } = req.body;
+    const { name, password, address } = req.body;
 
- // encontrar el usuario cuyo id coincida con el id de la URL
-   try {
-    const usuario = usuarios.find(user => user.id == id);
-    usuario.nombre = nombre
-    usuario.contraseña = contraseña
-    console.log(usuario, "nuevo usuario")
-    console.log(usuarios, "lista de usuarios")
-    res.send({usuarios, usuario})
-   } catch (error) {
-    console.log("usuario no encontrado")
-    res.send(error)
-   }
+    try {
+        // Buscar el usuario por ID
+        const usuario = await User.findByPk(id);
 
-   
-}
+        if (usuario) {
+            // Actualizar los campos necesarios
+            usuario.name = name || usuario.name;
+            usuario.password = password || usuario.password;
+            usuario.address = address || usuario.address;
+
+            await usuario.save(); // Guardar los cambios en la base de datos
+
+            res.send({
+                mensaje: "Usuario actualizado",
+                usuario
+            });
+        } else {
+            res.status(404).send("Usuario no encontrado");
+        }
+    } catch (error) {
+        console.error("Error al actualizar usuario:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+};
